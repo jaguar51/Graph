@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-
 public class Controller {
 
     public LineChart<NumberAxis, NumberAxis> graphicsPanel;
@@ -42,22 +41,20 @@ public class Controller {
     public void plotStockGraphic() {
         try {
             String curve = curveEquation.getText();
-            Expression expr =  new ExpressionBuilder(curve).variable("x").build();
+            Expression expr = new ExpressionBuilder(curve).variable("x").build();
 
             double leftBorder = Double.parseDouble(leftBorderCurve.getText());
             double rightBorder = Double.parseDouble(rightBorderCurve.getText());
             double addedCoef = (rightBorder - leftBorder) / Double.parseDouble(countPointForPlot.getText());
 
             ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
-            for (double i = leftBorder; i < rightBorder; i+=addedCoef) {
+            for (double i = leftBorder; i < rightBorder; i += addedCoef) {
                 data.add(new XYChart.Data<>(i, expr.setVariable("x", i).evaluate()));
             }
-           plotGraphic("f(x) = " + curve, data);
-        }
-        catch (NumberFormatException ex) {
+            plotGraphic("f(x) = " + curve, data);
+        } catch (NumberFormatException ex) {
             showError("Enter the left, right border and the number of points to plot graphic");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             showError(ex.getLocalizedMessage());
         }
     }
@@ -67,7 +64,7 @@ public class Controller {
      */
     public void plotInterpolateUniformGraphic() {
         try {
-            Expression expr =  new ExpressionBuilder(curveEquation.getText()).variable("x").build();
+            Expression expr = new ExpressionBuilder(curveEquation.getText()).variable("x").build();
             double leftBorder = Double.parseDouble(leftBorderCurve.getText());
             double rightBorder = Double.parseDouble(rightBorderCurve.getText());
 
@@ -78,16 +75,14 @@ public class Controller {
             getNodesUniform(xPoints, yPoints, leftBorder, rightBorder, countInterpolationPoints, expr);
             ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
             double addedCoef = (rightBorder - leftBorder) / Double.parseDouble(countPointForPlot.getText());
-            for (double i = leftBorder; i < rightBorder; i+=addedCoef) {
+            for (double i = leftBorder; i < rightBorder; i += addedCoef) {
                 data.add(new XYChart.Data<>(i, interpolate(i, xPoints, yPoints)));
             }
             plotGraphic("Интерполяция равномерной сеткой", data);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             showError("Enter the left, right border, the number of points for the interpolation" +
                     " and the number of points to plot graphic");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             showError(ex.getLocalizedMessage());
         }
     }
@@ -97,7 +92,7 @@ public class Controller {
      */
     public void plotInterpolateUnUniformGraphic() {
         try {
-            Expression expr =  new ExpressionBuilder(curveEquation.getText()).variable("x").build();
+            Expression expr = new ExpressionBuilder(curveEquation.getText()).variable("x").build();
             double leftBorder = Double.parseDouble(leftBorderCurve.getText());
             double rightBorder = Double.parseDouble(rightBorderCurve.getText());
 
@@ -108,16 +103,14 @@ public class Controller {
             getNodesUnUniform(xPoints, yPoints, leftBorder, rightBorder, countInterpolationPoints, expr);
             ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
             double addedCoef = (rightBorder - leftBorder) / Double.parseDouble(countPointForPlot.getText());
-            for (double i = leftBorder; i < rightBorder; i+=addedCoef) {
+            for (double i = leftBorder; i < rightBorder; i += addedCoef) {
                 data.add(new XYChart.Data<>(i, interpolate(i, xPoints, yPoints)));
             }
             plotGraphic("Интерполяция неравномерной сеткой", data);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             showError("Enter the left, right border, the number of points for the interpolation" +
                     " and the number of points to plot graphic");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             showError(ex.getLocalizedMessage());
         }
     }
@@ -127,7 +120,7 @@ public class Controller {
      */
     public void plotDifferenceUnUniformStock() {
         try {
-            Expression expr =  new ExpressionBuilder(curveEquation.getText()).variable("x").build();
+            Expression expr = new ExpressionBuilder(curveEquation.getText()).variable("x").build();
             double leftBorder = Double.parseDouble(leftBorderCurve.getText());
             double rightBorder = Double.parseDouble(rightBorderCurve.getText());
 
@@ -138,16 +131,14 @@ public class Controller {
             getNodesUnUniform(xPoints, yPoints, leftBorder, rightBorder, countInterpolationPoints, expr);
             ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
             double addedCoef = (rightBorder - leftBorder) / Double.parseDouble(countPointForPlot.getText());
-            for (double i = leftBorder; i < rightBorder; i+=addedCoef) {
+            for (double i = leftBorder; i < rightBorder; i += addedCoef) {
                 data.add(new XYChart.Data<>(i, expr.setVariable("x", i).evaluate() - interpolate(i, xPoints, yPoints)));
             }
             plotGraphic("Разница между исходным графиком и интерполяцией неравномерной сеткой", data);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             showError("Enter the left, right border, the number of points for the interpolation" +
                     " and the number of points to plot graphic");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             showError(ex.getLocalizedMessage());
         }
     }
@@ -157,7 +148,7 @@ public class Controller {
      */
     public void plotDifferenceUniformStock() {
         try {
-            Expression expr =  new ExpressionBuilder(curveEquation.getText()).variable("x").build();
+            Expression expr = new ExpressionBuilder(curveEquation.getText()).variable("x").build();
             double leftBorder = Double.parseDouble(leftBorderCurve.getText());
             double rightBorder = Double.parseDouble(rightBorderCurve.getText());
 
@@ -168,28 +159,27 @@ public class Controller {
             getNodesUniform(xPoints, yPoints, leftBorder, rightBorder, countInterpolationPoints, expr);
             ObservableList<XYChart.Data> data = FXCollections.observableArrayList();
             double addedCoef = (rightBorder - leftBorder) / Double.parseDouble(countPointForPlot.getText());
-            for (double i = leftBorder; i < rightBorder; i+=addedCoef) {
+            for (double i = leftBorder; i < rightBorder; i += addedCoef) {
                 data.add(new XYChart.Data<>(i, expr.setVariable("x", i).evaluate() - interpolate(i, xPoints, yPoints)));
             }
             plotGraphic("Разница между исходным графиком и интерполяцией равномерной сеткой", data);
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             showError("Enter the left, right border, the number of points for the interpolation" +
                     " and the number of points to plot graphic");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             showError(ex.getLocalizedMessage());
         }
     }
 
     /**
      * <p>Получение узлов интерполяции равномерной сетки</p>
-     * @param xPoints координаты по x
-     * @param yPoints координаты по y
-     * @param leftBorder левая граница графика
-     * @param rightBorder правая граница графика
+     *
+     * @param xPoints                  координаты по x
+     * @param yPoints                  координаты по y
+     * @param leftBorder               левая граница графика
+     * @param rightBorder              правая граница графика
      * @param countInterpolationPoints количество точек для интерполяции
-     * @param expression функция
+     * @param expression               функция
      */
     private void getNodesUniform(double[] xPoints, double[] yPoints,
                                  double leftBorder, double rightBorder, int countInterpolationPoints,
@@ -203,27 +193,29 @@ public class Controller {
 
     /**
      * <p>Получение узлов интерполяции неравномерной сетки</p>
-     * @param xPoints координаты по x
-     * @param yPoints координаты по y
-     * @param leftBorder левая граница графика
-     * @param rightBorder правая граница графика
+     *
+     * @param xPoints                  координаты по x
+     * @param yPoints                  координаты по y
+     * @param leftBorder               левая граница графика
+     * @param rightBorder              правая граница графика
      * @param countInterpolationPoints количество точек для интерполяции
-     * @param expression функция
+     * @param expression               функция
      */
     private void getNodesUnUniform(double[] xPoints, double[] yPoints,
-                                 double leftBorder, double rightBorder, int countInterpolationPoints,
-                                 Expression expression) {
+                                   double leftBorder, double rightBorder, int countInterpolationPoints,
+                                   Expression expression) {
         for (int i = 0; i < countInterpolationPoints; i++) {
             xPoints[i] = (leftBorder + rightBorder) / 2 + (rightBorder - leftBorder) /
-                    2 * Math.cos((2*i+1)* Math.PI / (2*(countInterpolationPoints)));
+                    2 * Math.cos((2 * i + 1) * Math.PI / (2 * (countInterpolationPoints)));
             yPoints[i] = expression.setVariable("x", xPoints[i]).evaluate();
         }
     }
 
     /**
      * <p>Построение графиков</p>
+     *
      * @param seriesName название серии
-     * @param data значения узлов
+     * @param data       значения узлов
      */
     private void plotGraphic(String seriesName, ObservableList<XYChart.Data> data) {
         XYChart.Series series = new XYChart.Series();
@@ -234,9 +226,10 @@ public class Controller {
 
     /**
      * <p>Интерполирует по Лагранжу</p>
+     *
      * @param arg точка, в которой вычисляем значение функции
-     * @param x узлы интерполяции
-     * @param y значение в узле
+     * @param x   узлы интерполяции
+     * @param y   значение в узле
      * @return значение функции в точке
      */
     private double interpolate(double arg, double[] x, double[] y) {
@@ -255,6 +248,7 @@ public class Controller {
 
     /**
      * <p>Показывает диалог с ошибками</p>
+     *
      * @param msg текст ошибки
      */
     private void showError(String msg) {
